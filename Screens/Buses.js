@@ -65,7 +65,7 @@ export default function Buses() {
                                     </View>
                                     <View style={styles.cardmid}>
                                         <View style={styles.departure}>
-                                            <Text style={{ fontSize: 12, color: '#707070', }}>Gaborone</Text>
+                                            <Text style={{ fontSize: 12, color: '#707070', }}>Gaborone Station</Text>
                                             <Text style={{ fontSize: 12, color: '#707070', fontWeight: 'bold' }}>8:00 AM</Text>
                                         </View>
                                         <View style={styles.froTo}>
@@ -74,7 +74,7 @@ export default function Buses() {
                                             <View style={{ height: 10, width: 10, borderRadius: 5, borderColor: '#FA8072', borderWidth: 1 }} />
                                         </View>
                                         <View style={styles.destination}>
-                                            <Text style={{ fontSize: 12, color: '#707070', }}>Francistown</Text>
+                                            <Text style={{ fontSize: 12, color: '#707070', }}>Francistown Bus Rank</Text>
                                             <Text style={{ fontSize: 12, color: '#707070', fontWeight: 'bold' }}>5:30 PM</Text>
                                         </View>
 
@@ -86,7 +86,7 @@ export default function Buses() {
                                         </View>
                                         <View style={styles.distance}>
                                             <MaterialCommunityIcons name='map-marker-distance' size={20} color='#FA8072' />
-                                            <Text style={{ fontSize: 12, color: '#707070', }}>250km</Text>
+                                            <Text style={{ fontSize: 12, color: '#707070', }}>260km</Text>
                                         </View>
                                         <View style={styles.seats}>
                                             <MaterialCommunityIcons name='seat' size={20} color='#FA8072' />
