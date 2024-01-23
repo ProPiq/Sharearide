@@ -167,7 +167,7 @@ export default function Seats() {
     return (
         <View style={styles.container}>
             <View style={styles.top}>
-                <Pressable onPress={() => navigation.goBack()} style={styles.back}>
+                <Pressable onPress={()=> navigation.goBack()} style={styles.back}>
                     <Ionicons name="ios-chevron-back" size={30} color="#707070" />
                 </Pressable>
                 <View style={styles.label}>
@@ -327,7 +327,7 @@ export default function Seats() {
             </View>
 
             <View style={styles.bot}>
-                <Pressable style={{ height: '60%', width: '80%', backgroundColor: '#429588', borderRadius: 18, justifyContent: 'center', alignItems: 'center' }}>
+                <Pressable onPress={()=> navigation.navigate('Ticket')} style={{ height: '60%', width: '80%', backgroundColor: '#429588', borderRadius: 18, justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{ fontSize: 18, color: '#fff' }}>Continue</Text>
                 </Pressable>
             </View>
