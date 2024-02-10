@@ -26,6 +26,16 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PSharearide) to use your location."
+        }
+      ]
+    ],
+  
     "extra": {
       "eas": {
         "projectId": "955f01fd-0932-43e9-b890-060782bfc4d0"

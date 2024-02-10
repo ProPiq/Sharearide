@@ -61,7 +61,7 @@ export default class Bookings extends React.Component {
                         keyExtractor={item => item.id}
                         renderItem={({ item, index }) => {
                             return (
-                                <TouchableOpacity style={styles.bookArea}>
+                                <TouchableOpacity onPress={()=> this.props.navigation.navigate('Tracking')} style={styles.bookArea}>
                                     <View style={styles.booking}>
                                         <View style={styles.cardtop}>
                                             <View style={styles.logo}>

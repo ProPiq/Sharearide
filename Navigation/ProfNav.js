@@ -2,6 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Account from "../Screens/Account";
 import Profile from "../Screens/Profile";
 import Bookings from "../Screens/Bookings";
+import Tracking from "../Screens/Tracking";
 
 
 const Stack = createStackNavigator();
@@ -22,6 +23,11 @@ export default function UserNav(){
         <Stack.Screen 
           name="Bookings" 
           component={Bookings}
+          options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+          name="Tracking" 
+          component={Tracking}
           options={{ headerShown: false }} 
         />
       </Stack.Navigator>
