@@ -1,46 +1,10 @@
 import React, { Component } from "react";
-import { View, Text, Image, TextInput, StyleSheet, Dimensions, Pressable, FlatList, SafeAreaView, TouchableOpacity } from "react-native";
-import { Ionicons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
+import { View, Text, StyleSheet, Dimensions, ScrollView, TextInput, TouchableOpacity, FlatList, Pressable } from "react-native";
+import { Ionicons, FontAwesome5, AntDesign, SimpleLineIcons } from '@expo/vector-icons';
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-const DATA = [
-    {
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        icon: 'user',
-        title: 'My Details',
-    },
-    {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        icon: 'tag',
-        title: 'Bookings',
-    },
-    {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f69',
-        icon: 'credit-card',
-        title: 'Payments',
-    },
-
-
-];
-
-const Item = (item) => (
-    <TouchableOpacity style={styles.flatItem}>
-        <View style={styles.icon}>
-            <FontAwesome5 name={item.icon} size={20} color="#707070" />
-        </View>
-        <View style={styles.item}>
-            <Text style={{fontSize: 18}}>{item.title}</Text>
-        </View>
-
-    </TouchableOpacity>
-);
-
-const separator = () => {
-    return (
-        <View style={{ borderBottomWidth: 0.3, width: '90%', alignSelf: 'center' }} />
-    )
-};
 
 
 export default class Profile extends React.Component {
@@ -54,13 +18,11 @@ export default class Profile extends React.Component {
 
     render() {
         return (
-
-
             <View style={styles.container}>
                 <View style={styles.top}>
-                    <View style={styles.back}>
+                    <Pressable onPress={()=> this.props.navigation.goBack()} style={styles.back}>
                         <Ionicons name="ios-chevron-back" size={30} color="#707070" />
-                    </View>
+                    </Pressable>
                     <View style={styles.label}>
                         <Text>Profile</Text>
                     </View>
@@ -68,24 +30,62 @@ export default class Profile extends React.Component {
                         <Ionicons name="md-notifications-outline" size={20} color="#707070" />
                     </View>
                 </View>
-                <SafeAreaView style={styles.mid}>
-                    <FlatList
-                        style={{ height: '100%' }}
-                        ItemSeparatorComponent={separator}
-                        data={DATA}
-                        renderItem={({ item }) => <Item title={item.title} icon={item.icon} />}
-                        keyExtractor={item => item.id}
-                    //extraData={selectedId}
-                    //horizontal={true}
-                    />
-                </SafeAreaView>
+                <View style={styles.mid}>
+                    <View style={styles.item}>
+                        <View style={styles.icon}>
+                            <AntDesign name={'user'} size={20} color={'#429588'}/>
+                        </View>
+                        <View style={styles.field}>
+                            <TextInput
+                                style={{ height: '100%', width: '100%' }}
+                                placeholder="John Doe"
+                            />
+                        </View>
+                    </View>
+                    <View style={styles.item}>
+                        <View style={styles.icon}>
+                            <AntDesign name={'mail'} size={20} color={'#429588'}/>
+                        </View>
+                        <View style={styles.field}>
+                            <TextInput
+                                style={{ height: '100%', width: '100%' }}
+                                placeholder="johndoe@mail.com"
+                                keyboardType="email-address"
+                            />
+                        </View>
+                    </View>
+                    <View style={styles.item}>
+                        <View style={styles.icon}>
+                            <AntDesign name={'lock'} size={20} color={'#429588'}/>
+                        </View>
+                        <View style={styles.field}>
+                            <TextInput
+                                style={{ height: '100%', width: '100%' }}
+                                placeholder="*********" 
+                                />
+                        </View>
+                    </View>
+                    <View style={styles.item}>
+                        <View style={styles.icon}>
+                            <AntDesign name={'phone'} size={20} color={'#429588'}/>
+                        </View>
+                        <View style={styles.field}>
+                            <TextInput
+                                style={{ height: '100%', width: '100%' }}
+                                placeholder="71234567" 
+                                keyboardType="numeric"
+                                />
+                                
+                        </View>
+                    </View>
+
+                </View>
                 <View style={styles.bot}>
                     <View style={styles.but}>
-                        <Text style={{fontSize: 15, color: '#fff'}}>LOGOUT</Text>
+                        <Text style={{ fontSize: 15, color: '#fff' }}>SAVE</Text>
                     </View>
                 </View>
             </View>
-
         )
     }
 }
@@ -113,7 +113,6 @@ const styles = StyleSheet.create({
         width: '25%',
         justifyContent: 'center',
         paddingLeft: '5%',
-        // backgroundColor: 'blue',
     },
 
     label: {
@@ -121,7 +120,6 @@ const styles = StyleSheet.create({
         width: '50%',
         justifyContent: 'center',
         alignItems: 'center',
-        // backgroundColor: 'red',
     },
 
     notification: {
@@ -129,39 +127,47 @@ const styles = StyleSheet.create({
         width: '25%',
         justifyContent: 'center',
         alignItems: 'center',
-        //backgroundColor: 'green',
     },
 
     mid: {
         height: '80%',
         width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-
-    },
-
-    flatItem: {
-        height: 60,
-        width: 340,
-        // backgroundColor: 'green',
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-
-    icon: {
-        height: '100%',
-        width: '30%',
-        justifyContent: 'center',
         alignItems: 'center',
     },
 
     item: {
-        height: '100%',
-        width: '70%',
-        justifyContent: 'center',
+        height: 50,
+        width: '80%',
+        borderRadius: 15,
+        flexDirection: 'row',
+        backgroundColor: '#fff',
+        marginBottom: '3%',
+        ...Platform.select({
+            ios: {
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.4,
+                shadowRadius: 3,
+            },
+            android: {
+                elevation: 5
+            }
+        }),
     },
 
-    
+    icon: {
+        height: '100%',
+        width: '20%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    field: {
+        height: '100%',
+        width: '80%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
     bot: {
         height: '10%',
         width: '100%',

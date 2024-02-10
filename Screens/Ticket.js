@@ -1,13 +1,27 @@
-import React, { Component } from "react";
+import React, { useMemo, useState, useNavigation } from 'react';
 import { View, Text, StyleSheet, Dimensions, Pressable, Image } from "react-native";
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import RadioButtonRN from 'radio-buttons-react-native';
+// import RadioGroup from 'react-native-radio-buttons-group';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+const colors =[
+        {
+            id: '1', // acts as primary key, should be unique and non-empty string
+            label: 'Debit/Credit Card',
+            value: 'option1',
+            color: '#429588'
+        },
+        {
+            id: '2',
+            label: 'Cash',
+            value: 'option2',
+            color: '#429588'
+        }
+    ]
 
-
-export default class Profile extends React.Component {
-
+export default class Ticket extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,13 +29,33 @@ export default class Profile extends React.Component {
         }
     }
 
+
+
     render() {
+
+        // const radioButtons = useMemo(() => ([
+        //     {
+        //         id: '1', // acts as primary key, should be unique and non-empty string
+        //         label: 'Debit/Credit Card',
+        //         value: 'option1',
+        //         color: '#429588'
+        //     },
+        //     {
+        //         id: '2',
+        //         label: 'Cash',
+        //         value: 'option2',
+        //         color: '#429588'
+        //     }
+        // ]), []);
+
+        // const [selectedId, setSelectedId] = useState();
+        //const navigation = useNavigation();
         return (
 
 
             <View style={styles.container}>
                 <View style={styles.top}>
-                    <Pressable onPress={() => this.props.navigation.goBack()} style={styles.back}>
+                    <Pressable onPress={() => navigation.goBack()} style={styles.back}>
                         <Ionicons name="ios-chevron-back" size={30} color="#707070" />
                     </Pressable>
                     <View style={styles.label}>
@@ -89,12 +123,33 @@ export default class Profile extends React.Component {
                             <Image style={{ height: '80%', width: '60%' }} source={require('../assets/barcode.png')} />
                         </View>
                     </View>
+                    <View style={styles.payOpt}>
+                        <View style={{ height: '30%', width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                            <Text style={{ fontSize: 15, color: '#707070' }}>Payment Method</Text>
+                        </View>
+                        <RadioButtonRN
+                            data={colors}
+                            animationTypes={['shake']}
+                            initial={3}
+                            selectedBtn={(e) => this.setState({ res: e })}
+                            circleSize={16}
+                            activeColor={'#429588'}
+                            box={false}
+                        />
+                        {/* <RadioGroup
+                        containerStyle={{ alignItems: 'flex-start'}}
+                        labelStyle={{ color: '#707070' }}
+                        radioButtons={radioButtons}
+                        onPress={setSelectedId}
+                        selectedId={selectedId}
+                    /> */}
+                    </View>
 
                 </View>
                 <View style={styles.bot}>
-                    <View style={styles.but}>
+                    <Pressable onPress={() => this.props.navigation.navigate('Cards')} style={styles.but}>
                         <Text style={{ fontSize: 15, color: '#fff' }}>Continue</Text>
-                    </View>
+                    </Pressable>
                 </View>
             </View>
 
@@ -125,7 +180,6 @@ const styles = StyleSheet.create({
         width: '25%',
         justifyContent: 'center',
         paddingLeft: '5%',
-        // backgroundColor: 'blue',
     },
 
     label: {
@@ -133,7 +187,6 @@ const styles = StyleSheet.create({
         width: '50%',
         justifyContent: 'center',
         alignItems: 'center',
-        // backgroundColor: 'red',
     },
 
     notification: {
@@ -141,14 +194,12 @@ const styles = StyleSheet.create({
         width: '25%',
         justifyContent: 'center',
         alignItems: 'center',
-        //backgroundColor: 'green',
     },
 
     mid: {
         height: '80%',
         width: '100%',
         alignItems: 'center',
-       // backgroundColor: 'pink',
     },
 
     ticket: {
@@ -279,6 +330,25 @@ const styles = StyleSheet.create({
     barcode: {
         height: '100%',
         width: '50%'
+    },
+
+    payOpt: {
+        height: '25%',
+        width: '85%',
+        padding: '3%',
+        marginTop: '6%',
+        borderRadius: 30,
+        backgroundColor: '#fff',
+        ...Platform.select({
+            ios: {
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.4,
+                shadowRadius: 3,
+            },
+            android: {
+                elevation: 5
+            }
+        }),
     },
 
     bot: {

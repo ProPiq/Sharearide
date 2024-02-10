@@ -3,6 +3,8 @@ import Buses from "../Screens/Buses";
 import Details from "../Screens/Details";
 import Seats from "../Screens/Seats";
 import Ticket from "../Screens/Ticket";
+import Cards from "../Screens/Cards";
+import AddCard from "../Screens/AddCard";
 
 
 const Stack = createStackNavigator();
@@ -28,6 +30,16 @@ export default function UserNav(){
         <Stack.Screen 
           name="Ticket" 
           component={Ticket}
+          options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+          name="Cards" 
+          component={Cards}
+          options={{ headerShown: false }} 
+        />
+         <Stack.Screen 
+          name="AddCard" 
+          component={AddCard}
           options={{ headerShown: false }} 
         />
       </Stack.Navigator>
