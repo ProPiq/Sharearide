@@ -3,13 +3,15 @@ import { View, Text, Image, TextInput, StyleSheet, Dimensions, Pressable, FlatLi
 import { Ionicons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
+import MapViewDirections from 'react-native-maps-directions';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 
 export default function Tracking() {
-
+    const destination = { latitude: -21.173611, longitude: 27.512501 };
+    const GOOGLE_MAPS_APIKEY = 'AIzaSyC7WKgZRHFZIcnL5j337eiPa5l2b4pY4FU';
     const [currentLocation, setCurrentLocation] = useState(null);
     const [initialRegion, setInitialRegion] = useState(null);
 
@@ -27,8 +29,8 @@ export default function Tracking() {
             setInitialRegion({
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude,
-                latitudeDelta: -24.645767,
-                longitudeDelta: 25.888392,
+                latitudeDelta: 0.005,
+                longitudeDelta: 0.005,
             });
         };
 
@@ -38,7 +40,7 @@ export default function Tracking() {
     return (
 
         <View style={styles.container}>
-            <View style={styles.top}>
+            {/* <View style={styles.top}>
                 <Pressable onPress={() => navigation.goBack()} style={styles.back}>
                     <Ionicons name="ios-chevron-back" size={30} color="#707070" />
                 </Pressable>
@@ -48,7 +50,7 @@ export default function Tracking() {
                 <View style={styles.notification}>
                     <Ionicons name="md-notifications-outline" size={20} color="#707070" />
                 </View>
-            </View>
+            </View> */}
             <View style={styles.mid}>
                 <View style={styles.midTop}>
                     <View style={styles.toFro}>
@@ -78,6 +80,16 @@ export default function Tracking() {
                 <View style={styles.midBot}>
                     {initialRegion && (
                         <MapView style={styles.map} initialRegion={initialRegion}>
+                            <MapViewDirections
+                            origin={currentLocation}
+                            destination={destination}
+                            apikey={GOOGLE_MAPS_APIKEY}
+                            strokeWidth={3}
+                            strokeColor="hotpink"
+                            mode={'DRIVING'}
+                            precision="high"
+                            // onReady={result=> {setDistance(result.distance), setTime(result.duration)}}
+                        />
                             {currentLocation && (
                                 <Marker
                                     coordinate={{
@@ -107,7 +119,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: windowHeight,
         width: windowWidth,
-        marginTop: '8%'
+        paddingTop: '8%'
     },
 
     top: {
@@ -143,7 +155,7 @@ const styles = StyleSheet.create({
     },
 
     mid: {
-        height: '80%',
+        height: '100%',
         width: '100%',
 
     },
@@ -153,11 +165,12 @@ const styles = StyleSheet.create({
         width: '100%',
         padding: '2%',
         flexDirection: 'row',
+        alignItems: 'center',
     },
 
     toFro: {
         height: '100%',
-        width: '20%',
+        width: '15%',
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -183,13 +196,13 @@ const styles = StyleSheet.create({
     },
 
     fields: {
-        height: '100%',
-        width: '60%',
+        height: '80%',
+        width: '65%',
         justifyContent: 'space-between',
     },
 
     destination: {
-        height: '45%',
+        height: '44%',
         width: '95%',
         borderRadius: 11,
         justifyContent: 'center',
@@ -214,8 +227,12 @@ const styles = StyleSheet.create({
     midBot: {
         height: '80%',
         width: '100%',
-        backgroundColor: 'violet',
     },
+
+    map: {
+        flex: 1,
+        width: '100%'
+      },
 
     bot: {
         height: '10%',
@@ -223,8 +240,5 @@ const styles = StyleSheet.create({
         paddingTop: '3%',
         backgroundColor: '#c1c1c1'
     },
-
-
-
 
 });
