@@ -1,25 +1,44 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, Image, TextInput, StyleSheet, Dimensions, Pressable, FlatList, SafeAreaView, } from "react-native";
+import React, { useEffect,useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { View, Text, Image, TextInput, StyleSheet, Dimensions, Pressable, FlatList, SafeAreaView, ScrollView } from "react-native";
 import { Ionicons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import MapView from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import * as Location from "expo-location";
+import codegenNativeCommands from "react-native/Libraries/Utilities/codegenNativeCommands";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+export default function Details( {route}   ) {
+    const tripDetails = route.params.tripDetails;
 
 
-export default function Details() {
+  /*  constructor(props) {
+        super(props);
+        this.state = {
+            tripDetails: this.props.route.params.tripDetails,
+            
+        }
+    }
+    // {JSON.stringify(navigation.getParam('title'))}
+    render() {
+        const { navigation } = this.props;
+        const { tripDetails } = this.state;
+        //console.log(tripDetails);*/
 
-    const origin = { latitude: 37.3318456, longitude: -122.0296002 };
-    const destination = { latitude: -21.173611, longitude: 27.512501 };
+   // const origin = { latitude: 37.3318456, longitude: -122.0296002 };
+   const origin = tripDetails.start_city;
+   // const destination = { latitude: -21.173611, longitude: 27.512501 };
+   const destination = tripDetails.end_city 
     const GOOGLE_MAPS_APIKEY = 'AIzaSyC7WKgZRHFZIcnL5j337eiPa5l2b4pY4FU';
     const [currentLocation, setCurrentLocation] = useState(null);
     const [initialRegion, setInitialRegion] = useState(null);
     const [distance, setDistance] = useState(null);
     const [time, setTime] = useState(null);
+    const navigation=useNavigation();
 
+    
     useEffect(() => {
         const getLocation = async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
@@ -34,30 +53,32 @@ export default function Details() {
             setInitialRegion({
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude,
-                latitudeDelta: 0.005,
-                longitudeDelta: 0.005,
+                latitudeDelta: 0.9,
+                longitudeDelta: 0.9,
             });
         };
 
         getLocation();
     }, []);
 
-    return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.top}>
-                <Pressable onPress={() => this.props.navigation.goBack()} style={styles.back}>
-                    <Ionicons name="ios-chevron-back" size={30} color="#707070" />
-                </Pressable>
-                <View style={styles.label}>
-                    <Text>Details</Text>
+
+        return (
+            <SafeAreaView style={styles.container}>
+                <View style={styles.top}>
+                    <Pressable onPress={() => navigation.goBack()} style={styles.back}>
+                        <Ionicons name="ios-chevron-back" size={30} color="#707070" />
+                    </Pressable>
+                    <View style={styles.label}>
+                        <Text>Details</Text>
+                        
+                    </View>
+                    <View style={styles.notification}>
+                        <Ionicons name="md-notifications-outline" size={20} color="#707070" />
+                    </View>
                 </View>
-                <View style={styles.notification}>
-                    <Ionicons name="md-notifications-outline" size={20} color="#707070" />
-                </View>
-            </View>
 
 
-            <View style={styles.mid}>
+                <View style={styles.mid}>
                 <View style={styles.mapCon}>
                     <MapView style={styles.map} initialRegion={initialRegion}>
                         <MapViewDirections
@@ -65,95 +86,97 @@ export default function Details() {
                             destination={destination}
                             apikey={GOOGLE_MAPS_APIKEY}
                             strokeWidth={3}
-                            strokeColor="hotpink"
+                            strokeColor="red"
                             mode={'DRIVING'}
                             precision="high"
                             // onReady={result=> {setDistance(result.distance), setTime(result.duration)}}
                         />
                     </MapView >
                 </View>
-                <View style={styles.info}>
-                    <View style={styles.cardtop}>
-                        <View style={styles.logo}>
-                            <Image style={{ height: 38, width: 38, borderRadius: 19, alignSelf: 'center' }} source={require('../assets/cardart.jpg')} />
-                        </View>
-                        <View style={styles.title}>
-                            <Text style={{ fontSize: 15, color: '#707070' }}>Sharearide Travel & Tours</Text>
-                        </View>
-                        <View style={styles.price}>
-                            <View style={{ height: 27, width: 83, borderRadius: 18, backgroundColor: '#707070', justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>P 350.00</Text>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={styles.cardmid}>
-                        <View style={styles.departure}>
-                            <Text style={{ fontSize: 12, color: '#707070', }}>Gaborone</Text>
-                            <Text style={{ fontSize: 12, color: '#707070', fontWeight: 'bold' }}>8:00 AM</Text>
-                        </View>
-                        <View style={styles.froTo}>
-                            <View style={{ height: 10, width: 10, borderRadius: 5, borderColor: '#429588', borderWidth: 1 }} />
-                            <View style={{ height: 0, width: '70%', borderColor: '#707070', borderWidth: 0.3 }} />
-                            <View style={{ height: 10, width: 10, borderRadius: 5, borderColor: '#FA8072', borderWidth: 1 }} />
-                        </View>
-                        <View style={styles.destination}>
-                            <Text style={{ fontSize: 12, color: '#707070', }}>Francistown</Text>
-                            <Text style={{ fontSize: 12, color: '#707070', fontWeight: 'bold' }}>5:30 PM</Text>
-                        </View>
 
-                    </View>
-                    <View style={styles.cardbot}>
-                        <View style={styles.time}>
-                            <FontAwesome5 name='clock' size={20} color='#FA8072' />
-                            <Text style={{ fontSize: 12, color: '#707070', }}>10 hrs</Text>
-                        </View>
-                        <View style={styles.distance}>
-                            <MaterialCommunityIcons name='map-marker-distance' size={20} color='#FA8072' />
-                            <Text style={{ fontSize: 12, color: '#707070', }}>440 km</Text>
-                        </View>
-                        <View style={styles.seats}>
-                            <MaterialCommunityIcons name='seat' size={20} color='#FA8072' />
-                            <Text style={{ fontSize: 12, color: '#707070', }}>45/50</Text>
-                        </View>
-                        <View style={styles.date}>
-                            <Ionicons name='calendar' size={15} color='#FA8072' />
-                            <Text style={{ fontSize: 12, color: '#707070', }}>07/10/23</Text>
-                        </View>
-                    </View>
-                </View>
-            </View>
-            <View style={styles.bot}>
-                <View style={styles.bot1}>
-                    <Text style={{ color: '#707070', fontSize: 15 }}>Intermediate Destinations</Text>
-                </View>
-                <View style={styles.bot2}>
-                    <View style={styles.inter}>
-                        <View style={{ height: '100%', width: '30%', justifyContent: 'center', alignItems: 'center', }}>
-                            <View style={{ height: 50, width: 50, borderRadius: 25, justifyContent: 'center', alignItems: 'center', backgroundColor: '#707070' }}>
-                                <Ionicons name="bus" size={25} color={'#fff'} />
+                    <View style={styles.info}>
+                        <View style={styles.cardtop}>
+                            <View style={styles.logo}>
+                                <Image style={{ height: 38, width: 38, borderRadius: 19, alignSelf: 'center' }} source={{ uri: tripDetails.image }} />
+                            </View>
+                            <View style={styles.title}>
+                                <Text style={{ fontSize: 15, color: '#707070' }}>{tripDetails.company}</Text>
+                                <Text style={{ fontSize: 15, color: '#707070' }}>Reg : {tripDetails.reg_no}</Text>
+                            </View>
+                            <View style={styles.price}>
+                                <View style={{ height: 27, width: 83, borderRadius: 18, backgroundColor: '#707070', justifyContent: 'center', alignItems: 'center' }}>
+                                    <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>P {tripDetails.fare}</Text>
+                                </View>
                             </View>
                         </View>
-                        <View style={{ height: '100%', width: '70%', justifyContent: 'center', }}>
-                            <Text style={{ color: '#707070', fontSize: 15 }}>Palapye Bus Station</Text>
-                            <View style={{ height: '40%', width: '25%', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
-                                <FontAwesome5 name="clock" size={20} color='#FA8072' />
-                                <Text style={{ color: '#707070', fontSize: 15 }}>2 hrs</Text>
+                        <View style={styles.cardmid}>
+                            <View style={styles.departure}>
+                                <Text style={{ fontSize: 12, color: '#707070', }}>{tripDetails.start_city}</Text>
+                                <Text style={{ fontSize: 12, color: '#707070', fontWeight: 'bold' }}>{tripDetails.departure}</Text>
+                            </View>
+                            <View style={styles.froTo}>
+                                <View style={{ height: 10, width: 10, borderRadius: 5, borderColor: '#429588', borderWidth: 1 }} />
+                                <View style={{ height: 0, width: '70%', borderColor: '#707070', borderWidth: 0.3 }} />
+                                <View style={{ height: 10, width: 10, borderRadius: 5, borderColor: '#FA8072', borderWidth: 1 }} />
+                            </View>
+                            <View style={styles.destination}>
+                                <Text style={{ fontSize: 12, color: '#707070', }}>{tripDetails.end_city}</Text>
+                                <Text style={{ fontSize: 12, color: '#707070', fontWeight: 'bold' }}>{tripDetails.arrival}</Text>
+                            </View>
+
+                        </View>
+                        <View style={styles.cardbot}>
+                            <View style={styles.time}>
+                                <FontAwesome5 name='clock' size={20} color='#FA8072' />
+                                <Text style={{ fontSize: 12, color: '#707070', }}>{tripDetails.approximate_time} Hrs</Text>
+                            </View>
+                            <View style={styles.distance}>
+                                <MaterialCommunityIcons name='map-marker-distance' size={20} color='#FA8072' />
+                                <Text style={{ fontSize: 12, color: '#707070', }}>{tripDetails.distance} KM </Text>
+                            </View>
+                            <View style={styles.seats}>
+                                <MaterialCommunityIcons name='seat' size={20} color='#FA8072' />
+                                <Text style={{ fontSize: 12, color: '#707070', }}>{tripDetails.booking_count}/ {tripDetails.total_seats}</Text>
+                            </View>
+                            <View style={styles.date}>
+                                <Ionicons name='calendar' size={15} color='#FA8072' />
+                                <Text style={{ fontSize: 12, color: '#707070', }}>{tripDetails.booking_date}</Text>
                             </View>
                         </View>
                     </View>
                 </View>
-                <View style={styles.bot3}>
-                    <Pressable onPress={() => this.props.navigation.navigate('Seats')} style={{ height: '50%', width: '80%', backgroundColor: '#429588', borderRadius: 18, justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 18, color: '#fff' }}>Continue</Text>
-                    </Pressable>
+                <View style={styles.bot}>
+                    <View style={styles.bot1}>
+                        <Text style={{ color: '#707070', fontSize: 15 }}>Intermediate Destinations</Text>
+                    </View>
+                    <View style={styles.bot2}>
+                        <View style={styles.inter}>
+                            <View style={{ height: '100%', width: '30%', justifyContent: 'center', alignItems: 'center',}}>
+                                <View style={{ height: 50, width: 50, borderRadius: 25, justifyContent: 'center', alignItems: 'center', backgroundColor: '#707070' }}>
+                                    <Ionicons name="bus" size={25} color={'#fff'} />
+                                </View>
+                            </View>
+                            <View style={{ height: '100%', width: '70%', justifyContent: 'center',}}>
+                                <Text style={{ color: '#707070', fontSize: 15 }}>Palapye Bus Station</Text>
+                                <View style={{height: '40%', width: '25%', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row'}}>
+                                    <FontAwesome5 name="clock" size={20} color='#FA8072' />
+                                    <Text style={{ color: '#707070', fontSize: 15 }}>2 hrs</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={styles.bot3}>
+                        <Pressable onPress={()=> navigation.navigate('Seats',{ tripDetails })} style={{height: '50%', width: '80%', backgroundColor: '#429588', borderRadius: 18, justifyContent: 'center', alignItems: 'center'}}>
+                            <Text style={{fontSize: 18, color: '#fff'}}>Continue</Text>
+                        </Pressable>
+                    </View>
                 </View>
-            </View>
 
-        </SafeAreaView>
+            </SafeAreaView>
 
-    )
+        )
+   // }
 }
-
 
 const styles = StyleSheet.create({
     container: {
@@ -162,7 +185,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: windowHeight,
         width: windowWidth,
-        paddingTop: '8%'
+        marginTop: '8%'
     },
 
     top: {
@@ -201,8 +224,8 @@ const styles = StyleSheet.create({
     mid: {
         height: '60%',
         width: '100%',
-        paddingLeft: '3%',
-        paddingRight: '3%',
+        padding: '3%',
+        //  backgroundColor: 'blue'
     },
 
     mapCon: {
@@ -217,7 +240,6 @@ const styles = StyleSheet.create({
         width: '100%',
         borderRadius: 25,
     },
-
 
     info: {
         height: '40%',

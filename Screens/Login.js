@@ -1,8 +1,11 @@
+
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, StyleSheet, Dimensions, Pressable, Image, TextInput, KeyboardAvoidingView } from "react-native";
+import { View, Text, StyleSheet, Dimensions, Pressable, Image, TextInput, KeyboardAvoidingView, Keyboard } from "react-native";
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -13,13 +16,61 @@ export default class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            userEmail: '',
+            userPassword: '',
+            emailError: ''
         }
     }
 
+
+    login = () => {
+        const { userEmail, userPassword } = this.state;
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (userEmail === "") {
+            this.setState({ emailError: 'Please enter an Email address' });
+        } else if (reg.test(userEmail) === false) {
+            this.setState({ emailError: 'Email is Not Correct' });
+            return false;
+        } else if (userPassword === "") {
+            this.setState({ emailError: 'Please enter password' });
+            return false;
+        } else {
+            fetch('http://propiq.tech/SR/login.php', {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userEmail: userEmail,
+                    password: userPassword,
+                }),
+            })
+                .then(response => response.json())
+                .then(async(responseJson) => {
+                    if (responseJson.status === "ok" || responseJson.status == 200) {
+                        const { fname } = responseJson.user; // Extract fname from the response
+                        this.props.navigation.navigate('Landing'); // Pass fname to the landing page
+                        await AsyncStorage.setItem('name', fname)
+                    } else {
+                        alert(" " + responseJson.status);
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                    alert("An error occurred. Please try again.");
+                });
+        }
+
+        Keyboard.dismiss();
+    }
+
+   
+
+
     signup() {
         return (
-            <Text style={{ fontSize: 15, color: '#429588', fontWeight: 'bold' }}> Sign up here </Text>
+            <Text style={{ fontSize: 15, color: '#429588', fontWeight: 'bold' }}> Sign up </Text>
         )
     }
     render() {
@@ -39,20 +90,31 @@ export default class Login extends React.Component {
 
                     <View style={styles.midfld}>
                         <View style={styles.txtfld}>
-                            <View style={{height: '100%', width: '20%', justifyContent: 'center', alignItems: 'center', borderBottomLeftRadius: 8, borderTopLeftRadius: 8,}}>
-                                <Ionicons name="mail" size={20} color="#707070"/>
+                            <View style={{ height: '100%', width: '20%', justifyContent: 'center', alignItems: 'center', borderBottomLeftRadius: 8, borderTopLeftRadius: 8, }}>
+                                <Ionicons name="mail" size={20} color="#707070" />
                             </View>
-                            <View style={{height: '100%', width: '80%', justifyContent: 'center', alignItems: 'center', borderBottomRightRadius: 8, borderTopRightRadius: 8, }}>
-                                <TextInput placeholder='Email' fontSize={18} style={{height: '100%', width: '100%'}}/>
+                            <View style={{ height: '100%', width: '80%', justifyContent: 'center', alignItems: 'center', borderBottomRightRadius: 8, borderTopRightRadius: 8, }}>
+                                <TextInput
+                                    keyboardType="email-address"
+                                    autoCapitalize="none"
+                                    onChangeText={userEmail => this.setState({ userEmail, emailError: '' })}
+                                    style={{ height: '100%', width: '100%', fontSize: 18 }}
+                                    placeholder="Email"
+                                />
                             </View>
                         </View>
 
                         <View style={styles.txtfld2}>
-                            <View style={{height: '100%', width: '20%', justifyContent: 'center', alignItems: 'center', borderBottomLeftRadius: 8, borderTopLeftRadius: 8,}}>
-                                <Ionicons name="lock-closed" size={20} color="#707070"/>
+                            <View style={{ height: '100%', width: '20%', justifyContent: 'center', alignItems: 'center', borderBottomLeftRadius: 8, borderTopLeftRadius: 8, }}>
+                                <Ionicons name="lock-closed" size={20} color="#707070" />
                             </View>
-                            <View style={{height: '100%', width: '80%', justifyContent: 'center', alignItems: 'center', borderBottomRightRadius: 8, borderTopRightRadius: 8, }}>
-                                <TextInput placeholder='Password' fontSize={18} style={{height: '100%', width: '100%'}}/>
+                            <View style={{ height: '100%', width: '80%', justifyContent: 'center', alignItems: 'center', borderBottomRightRadius: 8, borderTopRightRadius: 8, }}>
+                                <TextInput
+                                    onChangeText={userPassword => this.setState({ userPassword })}
+                                    style={{ height: '100%', width: '100%', fontSize: 18 }}
+                                    placeholder="Password"
+                                    secureTextEntry
+                                />
                             </View>
                         </View>
 
@@ -62,7 +124,7 @@ export default class Login extends React.Component {
                     </View>
 
                     <View style={styles.midbtn}>
-                        <Pressable onPress={() => this.props.navigation.navigate('Landing')} style={styles.btn}>
+                        <Pressable onPress={this.login} style={styles.btn}>
                             <Text style={{ fontSize: 20, fontWeight: '500', color: '#ffffff' }}>SIGN IN</Text>
                         </Pressable>
                     </View>
@@ -114,7 +176,6 @@ const styles = StyleSheet.create({
     },
 
     top: {
-        //backgroundColor: '#c1c1c1',
         height: 148,
         width: '100%',
         justifyContent: 'center',
@@ -127,20 +188,18 @@ const styles = StyleSheet.create({
     },
 
     mid: {
-        //backgroundColor: '#FA8072',
         height: 290,
         width: '100%',
     },
 
     midtxt: {
-        //backgroundColor: 'blue',
-        height: '20%',
+        height: '10%',
         width: '100%',
         paddingLeft: '10%',
+
     },
 
     midfld: {
-       // backgroundColor: 'red',
         height: '60%',
         width: '100%',
         justifyContent: 'center',
@@ -168,11 +227,9 @@ const styles = StyleSheet.create({
         height: 25,
         width: 305,
         justifyContent: 'center',
-        //backgroundColor: 'yellow',
     },
 
     midbtn: {
-        //backgroundColor: 'green',
         height: '20%',
         width: '100%',
         justifyContent: 'center',
@@ -189,17 +246,13 @@ const styles = StyleSheet.create({
     },
 
     bot: {
-        //backgroundColor: '#429588',
-        height: '40%',
+        height: '30%',
         width: '100%',
     },
 
     bot1: {
-        //backgroundColor: 'red',
         height: '20%',
         width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
         flexDirection: 'row'
     },
 
@@ -232,3 +285,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 });
+
+

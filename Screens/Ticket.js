@@ -55,7 +55,7 @@ export default class Ticket extends React.Component {
 
             <View style={styles.container}>
                 <View style={styles.top}>
-                    <Pressable onPress={() => navigation.goBack()} style={styles.back}>
+                    <Pressable onPress={() => this.props.navigation.goBack()} style={styles.back}>
                         <Ionicons name="ios-chevron-back" size={30} color="#707070" />
                     </Pressable>
                     <View style={styles.label}>

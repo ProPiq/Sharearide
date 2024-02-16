@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Dimensions, Image, TextInput, Pressable, } from
 import { CheckBox } from '@rneui/themed';
 import Swiper from 'react-native-swiper'
 import { Ionicons } from '@expo/vector-icons';
-import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
+import { OtpInput } from "react-native-otp-entry";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -63,14 +63,14 @@ export default class Register extends React.Component {
                         <Image style={styles.logo} source={require('../assets/logo.png')} />
                     </View>
                 </View>
-                <View style={{ height: 500 }}>
+                <View style={{ height: 500, }}>
                     <Swiper
 
                         showsButtons={false}
                         loop={false}
                         index={this.state.idx}
                         showsPagination={false}
-                        scrollEnabled={false}
+                        scrollEnabled={true}
                         ref="swiper"
                     >
                         {/* Slide1 */}
@@ -109,30 +109,38 @@ export default class Register extends React.Component {
                                 showsPagination={false}
                                 ref="otp"
                             >
+                                {/* Slide2-1 */}
                                 <View style={{ flex: 1 }}>
-                                    <View style={{ height: '33%', justifyContent: 'center', paddingLeft: '10%' }}>
+                                    <View style={{ height: '20%', paddingLeft: '10%', }}>
                                         <Text style={{ fontSize: 26, fontWeight: '400', color: '#707070' }}>How do we contact you?</Text>
                                     </View>
 
                                     <View style={{ flex: 1, alignItems: 'center', }}>
                                         <TextInput
-                                            placeholder='Email' fontSize={18}
+                                            placeholder='Email'
+                                            inputMode="email"
+                                            fontSize={18}
                                             style={styles.txtfld}
                                         />
                                         <TextInput
-                                            placeholder='Number' fontSize={18}
+                                            placeholder='Number'
+                                            inputMode="numeric"
+                                            fontSize={18}
                                             style={styles.txtfld2}
                                         />
                                     </View>
                                 </View>
 
-                                <View style={{ flex: 1, padding: '8%' }}>
-                                    <View style={{ height: '33%', justifyContent: 'center', }}>
+                                {/* Slide2-2 */}
+                                <View style={{ height: '100%', padding: '4%'}}>
+                                    <View style={{ height: '33%', justifyContent: 'center' }}>
                                         <Text style={{ fontSize: 26, fontWeight: '400', color: '#707070', paddingBottom: '2%' }}>Verify your number</Text>
-                                        <Text style={{ fontSize: 14, color: '#707070' }}>Enter code sent to 72 123 456</Text>
+                                        <Text style={{ fontSize: 14, color: '#707070', paddingBottom: '4%' }}>Enter code sent to 72 123 456</Text>
                                     </View>
                                     <View style={styles.otpCon}>
+                                     
                                         <View style={styles.otpSqr}>
+                                            
                                             <TextInput
                                                 maxLength={1}
                                                 fontSize={23}
@@ -194,11 +202,13 @@ export default class Register extends React.Component {
 
                             <View style={styles.midfld}>
                                 <TextInput
-                                    placeholder='Password' fontSize={18}
+                                    placeholder='Password'
+                                    fontSize={18}
                                     style={styles.txtfld}
                                 />
                                 <TextInput
-                                    placeholder='Confirm Password' fontSize={18}
+                                    placeholder='Confirm Password'
+                                    fontSize={18}
                                     style={styles.txtfld2}
                                 />
                             </View>
@@ -209,7 +219,7 @@ export default class Register extends React.Component {
                                 </Pressable>
 
                                 <CheckBox
-                                    containerStyle={{ width: '85%' }}
+                                    containerStyle={{ height: '80%', width: '85%' }}
                                     checkedColor="#429588"
                                     textStyle={{ color: '#707070', fontSize: 18, fontWeight: 'normal', }}
                                     title='I confirm that I have read and agree to the Terms & Conditions and acknowledge the Privacy Policy'
@@ -277,18 +287,15 @@ const styles = StyleSheet.create({
 
 
     midtxt: {
-        //backgroundColor: 'blue',
-        height: '20%',
+        height: '10%',
         width: '100%',
         paddingLeft: '10%',
-        paddingTop: '10%',
     },
 
     midfld: {
-        //backgroundColor: 'red',
         height: '40%',
         width: '100%',
-        //justifyContent: 'center',
+        justifyContent: 'center',
         alignItems: 'center',
     },
 
@@ -306,7 +313,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingLeft: '4%',
         backgroundColor: '#F2EEED',
-        marginTop: 15,
+        marginTop: '8%',
     },
 
     txtfld3: {
@@ -315,15 +322,13 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingLeft: '4%',
         backgroundColor: '#F2EEED',
-        marginTop: 15,
+        marginTop: '8%',
     },
 
     midbtn: {
-        //backgroundColor: 'green',
-        padding: '6%',
-        height: '40%',
+        height: '50%',
         width: '100%',
-        //justifyContent: 'center',
+        justifyContent: 'center',
         alignItems: 'center',
     },
 
@@ -338,8 +343,7 @@ const styles = StyleSheet.create({
     },
 
     bot: {
-        //backgroundColor: '#429588',
-        height: '20%',
+        height: '10%',
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
@@ -393,14 +397,13 @@ const styles = StyleSheet.create({
     },
 
     otpCon: {
-        height: 49,
+        height: '40%',
         width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
         alignSelf: 'center',
         justifyContent: 'space-between',
         marginBottom: '10%',
-        //backgroundColor: '#c1c1c1'
     },
 
     otpSqr: {

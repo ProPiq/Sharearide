@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, Image, TextInput, StyleSheet, Dimensions, Pressable, FlatList, SafeAreaView, TouchableOpacity } from "react-native";
 import { Ionicons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -44,13 +45,26 @@ export default class Profile extends React.Component {
     onClick(i) {
         if (i == 0) {
            this.props.navigation.navigate('UserPro')
-           console.log(i)
         }
         if (i == 1) {
             this.props.navigation.navigate('Bookings')
-            console.log(i)
          }
     }
+
+    async logout(){
+      
+            try {
+                this.props.navigation.navigate('SignIn')
+                await AsyncStorage.removeItem(key);
+               
+                return true;
+            }
+            catch(exception) {
+                return false;
+            }
+        
+    }
+
 
     render() {
         return (
@@ -90,9 +104,9 @@ export default class Profile extends React.Component {
                     />
                 </SafeAreaView>
                 <View style={styles.bot}>
-                    <View style={styles.but}>
+                    <TouchableOpacity onPress={()=> this.logout()} style={styles.but}>
                         <Text style={{ fontSize: 15, color: '#fff' }}>LOGOUT</Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
             </View>
 
