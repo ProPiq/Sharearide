@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { View, Text, Image, TextInput, StyleSheet, Dimensions, Pressable, FlatList, SafeAreaView, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Dimensions, Share, FlatList, SafeAreaView, TouchableOpacity } from "react-native";
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import * as Linking from 'expo-linking';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -48,19 +49,51 @@ export default class Settings extends React.Component {
 
         }
     }
-
+    
     onClick(i) {
+        if (i == 0) {
+            Linking.openURL('https://web.dev.sharearide.co.bw/privacy_policy');
+        }
+        if (i == 1) {
+            Linking.openURL('https://web.dev.sharearide.co.bw/terms_conditions');
+        }
         if (i == 2) {
             this.props.navigation.navigate('Faq')
         }
-       
+        if (i == 3) {
+            this.props.navigation.navigate('About')
+        }
+        if (i == 4) {
+            this.onShare()
+        }
+        if (i == 5) {
+            this.props.navigation.navigate('Notifications')
+        }
     }
+
+    onShare = async () => {
+        try {
+          const result = await Share.share({
+            message:
+              'Sharearide is a revolutionary mobile application designed to simplify and streamline the process of booking buses. *Link to app store goes here*',
+          });
+          if (result.action === Share.sharedAction) {
+            if (result.activityType) {
+              // shared with activity type of result.activityType
+            } else {
+              // shared
+            }
+          } else if (result.action === Share.dismissedAction) {
+            // dismissed
+          }
+        } catch (error) {
+          Alert.alert(error.message);
+        }
+      };
 
 
     render() {
         return (
-
-
             <View style={styles.container}>
                 <View style={styles.top}>
                     <View style={styles.back}>

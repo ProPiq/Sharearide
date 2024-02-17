@@ -4,7 +4,7 @@ import { Ionicons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-ico
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-const DATA = [
+const active = [
     {
         id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
         name: 'Ms Jane Doe',
@@ -12,11 +12,28 @@ const DATA = [
         image: require('../assets/visa.jpg')
     },
 
+];
+const cancelled = [
 
-
+];
+const completed = [
+    {
+        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28b8',
+        name: 'Ms Jane Doe',
+        card: '**** **** **** 2192',
+        image: require('../assets/visa.jpg')
+    },
 
 ];
 
+const empty = () => {
+    return (
+        <View style={{alignSelf: 'center'}}>
+            <Text>No entries to show</Text>
+        </View>
+
+    )
+};
 
 export default class Bookings extends React.Component {
 
@@ -55,54 +72,50 @@ export default class Bookings extends React.Component {
                         <Text style={{ color: '#fff' }}>Completed</Text>
                     </Pressable>
                 </View>
-                <View style={styles.bot}>
+                <SafeAreaView style={styles.bot}>
                     <FlatList
-                        data={DATA}
+                        data={active}
                         keyExtractor={item => item.id}
+                        ListEmptyComponent={empty}
                         renderItem={({ item, index }) => {
                             return (
-                                <TouchableOpacity onPress={()=> this.props.navigation.navigate('Tracking')} style={styles.bookArea}>
-                                    <View style={styles.booking}>
-                                        <View style={styles.cardtop}>
-                                            <View style={styles.logo}>
-                                                <Image style={{ height: 38, width: 38, borderRadius: 19, alignSelf: 'center' }} source={require('../assets/cardart.jpg')} />
-                                            </View>
-                                            <View style={styles.title}>
-                                                <Text style={{ fontSize: 15, color: '#707070' }}>Sharearide Travel & Tours</Text>
-                                            </View>
-                                            <View style={styles.price}>
-                                                {/* <View style={{ height: 27, width: 83, borderRadius: 18, backgroundColor: '#429588', justifyContent: 'center', alignItems: 'center' }}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('Tracking')} style={styles.booking}>
+
+                                    <View style={styles.cardtop}>
+                                        <View style={styles.logo}>
+                                            <Image style={{ height: 38, width: 38, borderRadius: 19, alignSelf: 'center' }} source={require('../assets/cardart.jpg')} />
+                                        </View>
+                                        <View style={styles.title}>
+                                            <Text style={{ fontSize: 15, color: '#707070' }}>Sharearide Travel & Tours</Text>
+                                        </View>
+                                        <View style={styles.price}>
+                                            {/* <View style={{ height: 27, width: 83, borderRadius: 18, backgroundColor: '#429588', justifyContent: 'center', alignItems: 'center' }}>
                                                     <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>P 350.00</Text>
                                                 </View> */}
-                                            </View>
                                         </View>
-                                        <View style={styles.cardmid}>
-                                            <View style={styles.departure}>
-                                                <Text style={{ fontSize: 12, color: '#707070', }}>Gaborone</Text>
-                                                <Text style={{ fontSize: 12, color: '#707070', fontWeight: 'bold' }}>8:00 AM</Text>
-                                                <Text style={{ fontSize: 12, color: '#707070', fontWeight: 'bold' }}>7 Oct 2023</Text>
-                                            </View>
-                                            <View style={styles.froTo}>
-                                                <View style={{ height: 10, width: 10, borderRadius: 5, borderColor: '#429588', borderWidth: 1 }} />
-                                                <View style={{ height: 0, width: 78, borderColor: '#707070', borderWidth: 0.5 }} />
-                                                <View style={{ height: 10, width: 10, borderRadius: 5, borderColor: '#FA8072', borderWidth: 1 }} />
-                                            </View>
-                                            <View style={styles.destination}>
-                                                <Text style={{ fontSize: 12, color: '#707070', }}>Francistown</Text>
-                                                <Text style={{ fontSize: 12, color: '#707070', fontWeight: 'bold' }}>5:30 PM</Text>
-                                                <Text style={{ fontSize: 12, color: '#707070', fontWeight: 'bold' }}>7 Oct 2023</Text>
-                                            </View>
-
+                                    </View>
+                                    <View style={styles.cardmid}>
+                                        <View style={styles.departure}>
+                                            <Text style={{ fontSize: 12, color: '#707070', }}>Gaborone</Text>
+                                            <Text style={{ fontSize: 12, color: '#707070', fontWeight: 'bold' }}>8:00 AM</Text>
+                                            <Text style={{ fontSize: 12, color: '#707070', fontWeight: 'bold' }}>7 Oct 2023</Text>
+                                        </View>
+                                        <View style={styles.froTo}>
+                                            <View style={{ height: 10, width: 10, borderRadius: 5, borderColor: '#429588', borderWidth: 1 }} />
+                                            <View style={{ height: 0, width: 78, borderColor: '#707070', borderWidth: 0.3 }} />
+                                            <View style={{ height: 10, width: 10, borderRadius: 5, borderColor: '#FA8072', borderWidth: 1 }} />
+                                        </View>
+                                        <View style={styles.destination}>
+                                            <Text style={{ fontSize: 12, color: '#707070', }}>Francistown</Text>
+                                            <Text style={{ fontSize: 12, color: '#707070', fontWeight: 'bold' }}>5:30 PM</Text>
+                                            <Text style={{ fontSize: 12, color: '#707070', fontWeight: 'bold' }}>7 Oct 2023</Text>
                                         </View>
                                     </View>
                                 </TouchableOpacity>
                             )
                         }}
-
-                    //extraData={selectedId}
-
                     />
-                </View>
+                </SafeAreaView>
             </View>
 
         )
@@ -152,9 +165,8 @@ const styles = StyleSheet.create({
     },
 
     mid: {
-        height: '4.5%',
+        height: '5%',
         width: '90%',
-
         justifyContent: 'space-between',
         alignItems: 'center',
         flexDirection: 'row',
@@ -170,22 +182,17 @@ const styles = StyleSheet.create({
     },
 
     bot: {
-        height: '90%',
+        height: '85%',
         width: '100%',
-       paddingTop: '3%',
-     //   backgroundColor: '#c1c1c1'
-    },
-
-    bookArea: {
-        height: 200,
+        justifyContent: 'center',
         alignItems: 'center',
     },
 
     booking: {
-        height: '60%',
-        width: '93%',
+        height: 100,
+        width: 300,
         borderRadius: 23,
-        // padding: '4%',
+        margin: '5%',
         backgroundColor: '#fff',
         ...Platform.select({
             ios: {
@@ -200,14 +207,12 @@ const styles = StyleSheet.create({
     },
 
     cardtop: {
-        //backgroundColor: 'green',
         height: '50%',
         width: '100%',
         flexDirection: 'row'
     },
 
     logo: {
-        //  backgroundColor: 'blue',
         height: '100%',
         width: '15%',
         alignItems: 'center',
@@ -215,14 +220,12 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        // backgroundColor: 'red',
         height: '100%',
         width: '50%',
         justifyContent: 'center'
     },
 
     price: {
-        //backgroundColor: 'pink',
         height: '100%',
         width: '35%',
         alignItems: 'center',
@@ -230,7 +233,6 @@ const styles = StyleSheet.create({
     },
 
     cardmid: {
-        //backgroundColor: 'blue',
         height: '50%',
         width: '100%',
         flexDirection: 'row'
@@ -240,8 +242,7 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '30%',
         alignItems: 'flex-end',
-        //justifyContent: 'space-between',
-        //paddingTop: '2%',
+
         paddingBottom: '2%',
     },
 
@@ -257,8 +258,6 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '30%',
         alignItems: 'flex-start',
-        //justifyContent: 'space-between',
-        //paddingTop: '2%',
         paddingBottom: '2%',
 
     },

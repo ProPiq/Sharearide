@@ -46,7 +46,7 @@ export default function Buses() {
                     <Text>Please wait...</Text>
                 ) : (
                     <FlatList
-                        style={{ height: '100%' }}
+                       style={{ }}
                         data={tripData}
                         keyExtractor={item => item.uuid}
                         renderItem={({ item }) => (

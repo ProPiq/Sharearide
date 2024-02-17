@@ -56,35 +56,34 @@ export default class Faq extends React.Component {
 
             <View style={styles.container}>
                 <View style={styles.top}>
-                    <Pressable onPress={() => this.props.navigation.goBack()} style={styles.drawer}>
-                        <Ionicons name={'arrow-back'} size={25} color={'#707070'} />
+                    <Pressable onPress={()=> this.props.navigation.goBack()} style={styles.back}>
+                        <Ionicons name="ios-chevron-back" size={30} color="#707070" />
                     </Pressable>
-                    <View style={styles.title}>
-                        <Text style={{ color: '#707070' }}>FAQ</Text>
+                    <View style={styles.label}>
+                        <Text>FAQ</Text>
                     </View>
                     <View style={styles.notification}>
-                        <Ionicons name={'notifications'} size={20} color={'#707070'} />
+                        <Ionicons name="md-notifications-outline" size={20} color="#707070" />
                     </View>
                 </View>
                 <View style={styles.mid}>
                     <View style={styles.mid1}>
-                        <View style={{height: '50%', width: '100%', backgroundColor: 'red'}}>
+                        <View style={{ height: '100%', width: '100%', padding: '3%' }}>
                             <Text style={styles.midTitle}>FAQ & Support</Text>
                             <Text style={styles.intro}>Welcome to our FAQ page, designed to address your queries and provide clarity on our mobile app.
                                 Whether you're a new user or a seasoned pro, find answers to common questions below:
                             </Text>
+                            <View style={{ height: '20%', width: '100%', flexDirection: 'row' }}>
+                                <Pressable onPress={() => this.makeCall()} style={{ height: '100%', width: '50%', justifyContent: 'center', alignItems: 'center' }}>
+                                    <Text style={styles.intro}>+267 70 222 222</Text>
+                                </Pressable>
+                                <Pressable onPress={() => this.sendEmail()} style={{ height: '100%', width: '50%', justifyContent: 'center', alignItems: 'center' }}>
+                                    <Text style={styles.intro}>info@sharearide.com</Text>
+                                </Pressable>
+                            </View>
                         </View>
-                        <View style={{ height: '50%', width: '100%', flexDirection: 'row', backgroundColor: 'pink' }}>
-                            <Pressable onPress={() => this.makeCall()} style={{ height: '100%', width: '50%', justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={styles.intro}>+267 7639 0930</Text>
-                            </Pressable>
-                            <Pressable onPress={() => this.sendEmail()} style={{ height: '100%', width: '50%', justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={styles.intro}>info@propiq.tech</Text>
-                            </Pressable>
-                        </View>
-
                     </View>
-                    <SafeAreaView style={styles.mid}>
+                    <SafeAreaView style={{paddingTop: '5%'}}>
                         <FlatList
                             style={{ height: '100%' }}
                             data={DATA}
@@ -115,7 +114,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: windowHeight,
         width: windowWidth,
-        marginTop: '8%'
+        marginTop: '10%'
     },
 
     top: {
@@ -125,28 +124,28 @@ const styles = StyleSheet.create({
         //backgroundColor: '#c1c1c1'
     },
 
-    drawer: {
+    back: {
         height: '100%',
-        width: '20%',
+        width: '25%',
         justifyContent: 'center',
-        alignItems: 'center',
-        //backgroundColor: 'red'
+        paddingLeft: '5%',
+        // backgroundColor: 'blue',
     },
 
-    title: {
+    label: {
         height: '100%',
-        width: '60%',
+        width: '50%',
         justifyContent: 'center',
         alignItems: 'center',
-        //backgroundColor: 'green'
+        // backgroundColor: 'red',
     },
 
     notification: {
         height: '100%',
-        width: '20%',
+        width: '25%',
         justifyContent: 'center',
         alignItems: 'center',
-        //backgroundColor: 'blue'
+        //backgroundColor: 'green',
     },
 
     mid: {
@@ -157,7 +156,6 @@ const styles = StyleSheet.create({
     mid1: {
         height: '20%',
         width: '100%',
-        backgroundColor: 'blue'
     },
 
     midTitle: {
