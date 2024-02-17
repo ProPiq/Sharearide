@@ -19,7 +19,6 @@ export default function Buses() {
             .then(data => {
                 setTripData(data);
                 setLoading(false); // Data fetched, so set loading to false
-                console.warn(data)
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -83,16 +82,16 @@ export default function Buses() {
                                 </View>
                                 <View style={styles.cardbot}>
                                     <View style={styles.time}> 
-                                        <FontAwesome5 name='clock' size={20} color='#FA8072' />
-                                        <Text style={{ fontSize: 12, color: '#707070' }}>{`${item.approximate_time}hrs`}</Text>
+                                        <FontAwesome5 name='clock' size={18} color='#FA8072' />
+                                        <Text style={{ fontSize: 10, color: '#707070' }}>{`${(item.approximate_time/60).toFixed(1)} hrs`}</Text>
                                     </View>
                                     <View style={styles.distance}>
                                         <MaterialCommunityIcons name='map-marker-distance' size={20} color='#FA8072' />
-                                        <Text style={{ fontSize: 12, color: '#707070' }}>{`${item.distance}km`}</Text>
+                                        <Text style={{ fontSize: 10, color: '#707070' }}>{`${item.distance} km`}</Text>
                                     </View>
                                     <View style={styles.seats}> 
                                         <MaterialCommunityIcons name='seat' size={20} color='#FA8072' />
-                                        <Text style={{ fontSize: 12, color: '#707070' }}>{`${item.booking_count}/${item.total_seats}`}</Text>
+                                        <Text style={{ fontSize: 10, color: '#707070' }}>{`${item.booking_count}/${item.total_seats}`}</Text>
                                     </View>
                                     <View style={styles.date}>
                                         <Ionicons name='calendar' size={15} color='#FA8072' />
@@ -254,7 +253,7 @@ const styles = StyleSheet.create({
 
     time: {
         height: '100%',
-        width: '15%',
+        width: '17%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -262,16 +261,15 @@ const styles = StyleSheet.create({
 
     distance: {
         height: '100%',
-        width: '15%',
+        width: '17%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-
     },
 
     seats: {
         height: '100%',
-        width: '15%',
+        width: '17%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -279,7 +277,7 @@ const styles = StyleSheet.create({
 
     date: {
         height: '100%',
-        width: '15%',
+        width: '23%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',

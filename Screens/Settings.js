@@ -1,54 +1,41 @@
 import React, { Component } from "react";
 import { View, Text, Image, TextInput, StyleSheet, Dimensions, Pressable, FlatList, SafeAreaView, TouchableOpacity } from "react-native";
-import { Ionicons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const DATA = [
     {
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba1',
+        id: '1',
         title: 'Privacy Policy',
     },
     {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f632',
-        title: 'Tearms & Conditions',
+        id: '2',
+        title: 'Terms & Conditions',
     },
     {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f693',
+        id: '3',
         title: 'FAQ & Support',
     },
     {
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba4',
+        id: '4',
         title: 'About',
     },
     {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f635',
-        title: 'Language',
-    },
-    {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f696',
+        id: '6',
         title: 'Share',
     },
     {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f697',
+        id: '7',
         title: 'Notifications',
     },
 
 
 ];
 
-const Item = (item) => (
-    <TouchableOpacity style={styles.flatItem}>
-        <View style={styles.item}>
-            <Text style={{fontSize: 18}}>{item.title}</Text>
-        </View>
-
-    </TouchableOpacity>
-);
-
 const separator = () => {
     return (
-        <View style={{ borderBottomWidth: 0.3, width: '90%', alignSelf: 'center' }} />
+        <View style={{ borderBottomWidth: 0.3, width: '85%', alignSelf: 'center', borderColor: "#c1c1c1" }} />
     )
 };
 
@@ -61,6 +48,14 @@ export default class Settings extends React.Component {
 
         }
     }
+
+    onClick(i) {
+        if (i == 2) {
+            this.props.navigation.navigate('Faq')
+        }
+       
+    }
+
 
     render() {
         return (
@@ -83,10 +78,19 @@ export default class Settings extends React.Component {
                         style={{ height: '100%' }}
                         ItemSeparatorComponent={separator}
                         data={DATA}
-                        renderItem={({ item }) => <Item title={item.title} icon={item.icon} />}
                         keyExtractor={item => item.id}
-                    //extraData={selectedId}
-                    //horizontal={true}
+                        renderItem={({ item, index }) => {
+                            return (
+                                <TouchableOpacity onPress={() => this.onClick(index)} style={styles.flatItem}>
+                                    <View style={styles.item}>
+                                        <Text style={{ fontSize: 16 }}>{item.title}</Text>
+                                    </View>
+                                    <View style={styles.icon}>
+                                        <MaterialIcons name={'keyboard-arrow-right'} size={25} color="#707070" />
+                                    </View>
+                                </TouchableOpacity>
+                            )
+                        }}
                     />
                 </SafeAreaView>
             </View>
@@ -146,29 +150,23 @@ const styles = StyleSheet.create({
     },
 
     flatItem: {
-        height: 60,
-        width: 340,
-        alignItems: 'center'
-    },
-
-    icon: {
-        height: '100%',
-        width: '30%',
-        justifyContent: 'center',
+        height: 45,
+        width: 330,
+        flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center'
     },
 
     item: {
         height: '100%',
-        width: '70%',
+        width: '60%',
         justifyContent: 'center',
     },
 
-    
-   
-
-    
-
-
-
+    icon: {
+        height: '100%',
+        width: '20%',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+    },
 });

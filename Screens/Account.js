@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { View, Text, Image, TextInput, StyleSheet, Dimensions, Pressable, FlatList, SafeAreaView, TouchableOpacity } from "react-native";
-import { Ionicons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
+import { View, Text, StyleSheet, Dimensions, FlatList, SafeAreaView, TouchableOpacity } from "react-native";
+import { Ionicons, AntDesign, MaterialIcons} from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const windowWidth = Dimensions.get('window').width;
@@ -9,16 +9,16 @@ const DATA = [
     {
         id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
         icon: 'user',
-        title: 'My Details',
+        title: 'Profile',
     },
     {
         id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        icon: 'tag',
+        icon: 'tago',
         title: 'Bookings',
     },
     {
         id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f69',
-        icon: 'credit-card',
+        icon: 'creditcard',
         title: 'Payments',
     },
 
@@ -28,7 +28,7 @@ const DATA = [
 
 const separator = () => {
     return (
-        <View style={{ borderBottomWidth: 0.3, width: '90%', alignSelf: 'center' }} />
+        <View style={{ borderBottomWidth: 0.3, width: '85%', alignSelf: 'center', borderColor: '#c1c1c1' }} />
     )
 };
 
@@ -92,12 +92,14 @@ export default class Profile extends React.Component {
                             return (
                                 <TouchableOpacity onPress={()=> this.onClick(index)} style={styles.flatItem}>
                                     <View style={styles.icon}>
-                                        <FontAwesome5 name={item.icon} size={20} color="#707070" />
+                                        <AntDesign name={item.icon} size={19} color="#707070" />
                                     </View>
                                     <View style={styles.item}>
-                                        <Text style={{ fontSize: 18 }}>{item.title}</Text>
+                                        <Text style={{ fontSize: 16 }}>{item.title}</Text>
                                     </View>
-
+                                    <View style={styles.icon2}>
+                                        <MaterialIcons name={'keyboard-arrow-right'} size={25} color="#707070" />
+                                    </View>
                                 </TouchableOpacity>
                             )
                         }}
@@ -165,26 +167,33 @@ const styles = StyleSheet.create({
     },
 
     flatItem: {
-        height: 50,
-        width: 340,
-        // backgroundColor: 'green',
+        height: 45,
+        width: 330,
         flexDirection: 'row',
         alignItems: 'center'
     },
 
     icon: {
         height: '100%',
-        width: '30%',
+        width: '20%',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'flex-end',
+        paddingRight: '4%',
     },
 
     item: {
         height: '100%',
-        width: '70%',
+        width: '60%',
         justifyContent: 'center',
     },
 
+    icon2: {
+        height: '100%',
+        width: '20%',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        paddingRight: '5%',
+    },
 
     bot: {
         height: '10%',

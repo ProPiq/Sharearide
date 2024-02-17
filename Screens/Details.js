@@ -80,7 +80,7 @@ export default function Details( {route}   ) {
 
                 <View style={styles.mid}>
                 <View style={styles.mapCon}>
-                    <MapView style={styles.map} initialRegion={initialRegion}>
+                    <MapView  style={styles.map} initialRegion={initialRegion}>
                         <MapViewDirections
                             origin={currentLocation}
                             destination={destination}
@@ -127,20 +127,20 @@ export default function Details( {route}   ) {
                         </View>
                         <View style={styles.cardbot}>
                             <View style={styles.time}>
-                                <FontAwesome5 name='clock' size={20} color='#FA8072' />
-                                <Text style={{ fontSize: 12, color: '#707070', }}>{tripDetails.approximate_time} Hrs</Text>
+                                <FontAwesome5 name='clock' size={18} color='#FA8072' />
+                                <Text style={{ fontSize: 10, color: '#707070', }}>{(tripDetails.approximate_time/60).toFixed(1)} hrs</Text>
                             </View>
                             <View style={styles.distance}>
                                 <MaterialCommunityIcons name='map-marker-distance' size={20} color='#FA8072' />
-                                <Text style={{ fontSize: 12, color: '#707070', }}>{tripDetails.distance} KM </Text>
+                                <Text style={{ fontSize: 10, color: '#707070', }}>{tripDetails.distance} km </Text>
                             </View>
                             <View style={styles.seats}>
                                 <MaterialCommunityIcons name='seat' size={20} color='#FA8072' />
-                                <Text style={{ fontSize: 12, color: '#707070', }}>{tripDetails.booking_count}/ {tripDetails.total_seats}</Text>
+                                <Text style={{ fontSize: 10, color: '#707070', }}>{tripDetails.booking_count}/ {tripDetails.total_seats}</Text>
                             </View>
                             <View style={styles.date}>
                                 <Ionicons name='calendar' size={15} color='#FA8072' />
-                                <Text style={{ fontSize: 12, color: '#707070', }}>{tripDetails.booking_date}</Text>
+                                <Text style={{ fontSize: 10, color: '#707070', }}>{tripDetails.booking_date}</Text>
                             </View>
                         </View>
                     </View>
@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
 
     time: {
         height: '100%',
-        width: '15%',
+        width: '17%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -326,7 +326,7 @@ const styles = StyleSheet.create({
 
     distance: {
         height: '100%',
-        width: '15%',
+        width: '18%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -335,7 +335,7 @@ const styles = StyleSheet.create({
 
     seats: {
         height: '100%',
-        width: '15%',
+        width: '17%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
 
     date: {
         height: '100%',
-        width: '15%',
+        width: '23%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',

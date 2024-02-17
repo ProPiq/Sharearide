@@ -73,7 +73,7 @@ export default function Tracking() {
                         </View>
                         <View style={styles.iconSpace}>
                             <FontAwesome5 name='clock' size={20} color='#FA8072' />
-                            <Text>250 km</Text>
+                            <Text>9 hrs</Text>
                         </View>
                     </View>
                 </View>
@@ -85,7 +85,7 @@ export default function Tracking() {
                             destination={destination}
                             apikey={GOOGLE_MAPS_APIKEY}
                             strokeWidth={3}
-                            strokeColor="hotpink"
+                            strokeColor="red"
                             mode={'DRIVING'}
                             precision="high"
                             // onReady={result=> {setDistance(result.distance), setTime(result.duration)}}
@@ -107,7 +107,6 @@ export default function Tracking() {
 
             </View>
         </View>
-
     )
 }
 
@@ -219,7 +218,7 @@ const styles = StyleSheet.create({
     iconSpace: {
         height: '45%',
         width: '100%',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
         alignItems: 'center',
         flexDirection: 'row',
     },

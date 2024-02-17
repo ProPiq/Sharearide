@@ -199,12 +199,12 @@ export default function Home() {
                 width: "50%",
                 flexDirection: "row",
                 alignItems: "center",
-                justifyContent: "center",
+                justifyContent: "space-between",
                 paddingLeft: "10%",
               }}
             >
               <Text style={{ color: "#fff", fontSize: 18 }}>{dates}</Text>
-              {/* <TouchableOpacity
+             <TouchableOpacity
                 onPress={() => decrement()}
                 style={{
                   height: 26,
@@ -216,8 +216,8 @@ export default function Home() {
                 }}
               >
                 <FontAwesome5 name="minus" color="#707070" size={18} />
-              </TouchableOpacity> */}
-              {/* <View
+              </TouchableOpacity> 
+              <View
                 style={{
                   height: 26,
                   width: 26,
@@ -228,8 +228,8 @@ export default function Home() {
                 }}
               >
                 <Text style={{ color: "#fff", fontSize: 18 }}>{num}</Text>
-              </View> */}
-              {/* <TouchableOpacity
+              </View>
+              <TouchableOpacity
                 onPress={() => increment()}
                 style={{
                   height: 26,
@@ -241,7 +241,7 @@ export default function Home() {
                 }}
               >
                 <FontAwesome5 name="plus" color="#707070" size={18} />
-              </TouchableOpacity> */}
+              </TouchableOpacity>
             </View>
           </View>
           <View style={styles.midCard4}>

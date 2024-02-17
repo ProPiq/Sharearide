@@ -3,6 +3,7 @@ import Account from "../Screens/Account";
 import Profile from "../Screens/Profile";
 import Bookings from "../Screens/Bookings";
 import Tracking from "../Screens/Tracking";
+import Faq from "../Screens/Faq";
 
 
 const Stack = createStackNavigator();

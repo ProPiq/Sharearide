@@ -4,7 +4,7 @@ import { Ionicons, SimpleLineIcons, FontAwesome5, FontAwesome } from '@expo/vect
 import Home from "../Screens/Home";
 import UserNav from './UserNav';
 import ProfNav from './ProfNav';
-import Settings from "../Screens/Settings";
+import SettingNav from './SettingNav';
 
 
 
@@ -65,7 +65,7 @@ export default function TabNav() {
         }}
       />
       <Tab.Screen
-        name="Settings"
+        name="Setting"
         component={Sett}
         options={{
           headerShown: false,
@@ -96,7 +96,7 @@ function Prof() {
 }
 
 function Sett() {
-  return <Settings />;
+  return <SettingNav />;
 }
 
 
